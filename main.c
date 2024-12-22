@@ -1,19 +1,12 @@
 #include <stdio.h>
 #include <string.h>
+#include "estructuraProducto.h"
 #include "infoProductos.h"
 #include "consultarProductos.h"
 #include "validación.h"
 
-
-// Variables globales
-char nombres[100][50];
-char codigos[100][20];
-char fabricantes[100][50];
-int cantidades[100];
-float precios[100];
-float impuestos[100];
-int requierePrescripcion[100];
-int numProductos = 0;
+struct Producto inventario[1000];
+int numProductos = 0; // Contador de productos
 
 int main() {
     int opcion;
@@ -45,15 +38,15 @@ int main() {
         switch (opcion) {
             case 1:
                  // Llamar a la función para agregar un producto
-                ingresarProducto(nombres, codigos, fabricantes, cantidades, precios, impuestos, requierePrescripcion, &numProductos);
+                ingresarProducto(inventario, &numProductos);
                 break;
             case 2:
                 // Llamar a la función para buscar un producto
-                buscarProducto(nombres, codigos, fabricantes, cantidades, precios, impuestos, requierePrescripcion, numProductos);
+                buscarProducto(inventario, numProductos);
                 break;
             case 3:
                 // Llamar a la función para listar todos los productos
-                imprimirTodosLosProductos(nombres, codigos, fabricantes, cantidades, precios, impuestos, requierePrescripcion, numProductos);
+                imprimirTodosLosProductos(inventario, numProductos);
                 break;    
             case 4:
                 // Salir del sistema
@@ -62,11 +55,11 @@ int main() {
                 break;
             case 5:
                 // Llamar a la función para eliminar un producto
-                eliminarProducto(nombres, codigos, fabricantes, cantidades, precios, impuestos, requierePrescripcion, &numProductos);
+                eliminarProducto(inventario, &numProductos);
                 break;
             case 6:
                 // Llamar a la función para editar un producto
-                editarProducto(nombres, codigos, fabricantes, cantidades, precios, impuestos, requierePrescripcion, numProductos);
+                editarProducto(inventario, numProductos);
                 break;
             default:
                 // Manejo de opciones inválidas
