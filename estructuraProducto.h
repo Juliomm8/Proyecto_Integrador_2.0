@@ -5,7 +5,7 @@
 #include <string.h>
 
 
-// Estructura que define un producto en el inventario
+// Es la estructura que contiene los datos de un producto
 struct Producto {
     char nombre[50];           // Nombre del producto
     char codigo[20];           // Código único del producto

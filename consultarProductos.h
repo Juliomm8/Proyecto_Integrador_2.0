@@ -53,23 +53,23 @@ void consultarProductoPorNombre(char *nombreBusqueda, struct Producto inventario
 
     for (int i = 0; i < numProductos; i++) {
         if (strcmp(inventario[i].nombre, nombreBusqueda) == 0) {
-            
+
             printf("\033[1;32mProducto encontrado:\033[0m\n");
-            
+
             printf("  Nombre: %s\n", inventario[i].nombre);
-            
+
             printf("  Código: %s\n", inventario[i].codigo);
-            
+
             printf("  Fabricante: %s\n", inventario[i].fabricante);
-            
+
             printf("  Cantidad: %d\n", inventario[i].cantidad);
-            
+
             printf("  Precio (sin impuestos): %.2f\n", inventario[i].precio);
-            
+
             printf("  Porcentaje de impuesto: %.2f%%\n", inventario[i].impuesto);
-            
+
             printf("  P.V.P: %.2f\n", inventario[i].precio * (1 + inventario[i].impuesto / 100));
-            
+
             printf("  Requiere prescripción: %s\n", inventario[i].requierePrescripcion ? "Sí" : "No");
             encontrado = 1;
             break;

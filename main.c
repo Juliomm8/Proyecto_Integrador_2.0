@@ -1,19 +1,26 @@
 #include <stdio.h>
 #include <string.h>
-#include "estructuraProducto.h"
-#include "infoProductos.h"
-#include "consultarProductos.h"
-#include "validación.h"
+#include "estructuraProducto.h" // Header que contiene la estructura de los producto en el inventario
+#include "infoProductos.h"      // Header que tiene las funciones para agregar y listar productos
+#include "consultarProductos.h" // Header que tiene las funciones para buscar, editar y eliminar productos
+#include "validación.h"         // Header con funciones para validar entradas
+#include "archivos.h"           // Header con funciones para guardar y cargar el inventario en un archivo
 
-struct Producto inventario[1000];
-int numProductos = 0; // Contador de productos
+// Declaramos el inventario como un arreglo global de productos, para que sea mas facil de acceder desde cualquier parte del programa
+struct Producto inventario[1000]; // El programa puede almacenar hasta 1000 productos
+int numProductos = 0; // Variable que sirbe como contador para saber cuantos productos hay en el inventario
 
 int main() {
-    int opcion;
-    int continuar = 1;
+    int opcion;           // Variable que sirve para saber la opción del usuario
+    int continuar = 1;    // Variable que controla si el programa sigue ejecutándose
 
-    while (continuar) {
-        // Mostrar menú principal
+    // Carga el inventario desde el archivo 'inventario.txt' y si no encuentra el archivo, lo crea
+    numProductos = cargarInventario("inventario.txt", inventario);
+
+    // Inicia un while que muestra el menú principal hasta que el usuario elija la opcion de salir
+    while (continuar) { 
+        // Mendiante prints muestra el menú principal
+        // Los '\033[1;3_' y son códigos de escape ANSI y estos códigos de colores ayudan a distinguir entre mensajes importantes, errores, advertencias, y opciones del programa.
         printf("\033[1;34m\n========================================\n");
         printf("          Inventario - \033[1;33mPharma+\033[0m\n");
         printf("\033[1;34m========================================\n");
@@ -26,45 +33,23 @@ int main() {
         printf("\033[1;34m========================================\033[0m\n");
         printf("\033[1;37mSelecciona una opción [*]: \033[0m");
 
-        //Leer y validar entrada del usuario
+        /* 
+        1. Cuando ingresa al if, se le pide al usuario que ingrese una opción, con la función `scanf.
+        2.`scanf` retorna un valor si lo que ingreso el usuario esta correcto.
+           - Si el usuario ingresa un número válido, `scanf` retorna 1.
+           - Si la entrada no es válida (por ejemplo, letras o caracteres especiales), `scanf` retorna 0 o un valor negativo.
+        3. `!= 1` verifica si `scanf` retorna un valor distinto de 1. Si es así, significa que la entrada no es válida.
+        */
+
         if (scanf("%d", &opcion) != 1) {
             printf("\033[1;31mEntrada no válida, ingresa de nuevo . . .\033[0m\n");
-            while (getchar() != '\n'); //Limpiar el buffer de entrada
-            continue;
-        }
-        getchar(); // Limpiar el buffer
-
-        //Selección de la opción del menú principal
-        switch (opcion) {
-            case 1:
-                 // Llamar a la función para agregar un producto
-                ingresarProducto(inventario, &numProductos);
-                break;
-            case 2:
-                // Llamar a la función para buscar un producto
-                buscarProducto(inventario, numProductos);
-                break;
-            case 3:
-                // Llamar a la función para listar todos los productos
-                imprimirTodosLosProductos(inventario, numProductos);
-                break;    
-            case 4:
-                // Salir del sistema
-                printf("\033[1;32mSistema cerrado . . .\033[0m\n");
-                continuar = 0;
-                break;
-            case 5:
-                // Llamar a la función para eliminar un producto
-                eliminarProducto(inventario, &numProductos);
-                break;
-            case 6:
-                // Llamar a la función para editar un producto
-                editarProducto(inventario, numProductos);
-                break;
-            default:
-                // Manejo de opciones inválidas
-                printf("\033[1;31mOpción no válida, ingresa de nuevo . . .\033[0m\n");
-        }
-    }
-    return 0;
-}
+            while (getchar() != '\n');
+            /*
+            `getchar` se usa aquí para limpiar el buffer de entrada.
+            - Si el usuario ingresa algo inválido como carecteres, esos caracteres permanecen en el buffer de entrada.
+            - El `while (getchar() != '\n')` este va continuar funcionando hasta encontrar un salto de línea (`\n`),
+            asegurando que el próximo `scanf` reciba una entrada limpia.
+            */
+            continue;  
+            // `continue` va hacer que se salte el if 
+            //Hace que el programa a regresé al inicio del ciclo `while` principal.
