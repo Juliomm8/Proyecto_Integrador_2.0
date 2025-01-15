@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <string.h>
 
-
 // Es la estructura que contiene los datos de un producto
 struct Producto {
     char nombre[50];           // Nombre del producto

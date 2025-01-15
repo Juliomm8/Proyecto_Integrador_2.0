@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "estructuraProducto.h"
+#include "animacion.h"
 
 // Declaración de funciones
 void guardarInventario(const char *inventarioArchivo, struct Producto inventario[], int numProductos);
